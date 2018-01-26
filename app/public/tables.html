@@ -17,7 +17,7 @@
           <h3 class="text-center">Current Reservations and Waiting List</h3>
           <br>
           <div class="text-center">
-          <a href="/tables"><button type="button" class="btn btn-primary btn-lg"><span class="glyphicon glyphicon-list-alt"></span> View Tables</button></a>
+          <a href="/reserve"><button type="button" class="btn btn-primary btn-lg"><span class="glyphicon glyphicon-list-alt"></span> Make Reservation</button></a>
           <a href="/"><button type="button" class="btn btn-lg"><span class="glyphicon glyphicon-home"></span></button></a>
           </div>
         </div>
@@ -29,6 +29,7 @@
                               <h3 class="panel-title"><strong>Table Reservation</strong></h3>
                             </div>
                             <div class="panel-body">
+
                             </div>
                         </div>
                     </div>
@@ -39,10 +40,29 @@
                                 <h3 class="panel-title"><strong>Wait List</strong></h3>
                             </div>
                             <div class="panel-body">
+
                             </div>
                         </div>
                     </div>
                 </div>
         </div>
-    </div>    
+    </div>   
+    
+    <script type="text/javascript">
+        // Question: What does this code do?
+        $(document).ready() {
+          event.preventDefault();
+          var newReservation = {
+            name: $("#name").val().trim(),
+            phone: $("#phone").val().trim(),
+            email: $("#email").val().trim(),
+            uniqueid: $("#uniqueid").val().trim()
+          };
+    
+          // Question: What does this code do??
+          $.get("/api/reserve", newReservation)
+          .done(function(data) {
+          });
+        }
+      </script>
 </body>
