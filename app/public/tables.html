@@ -17,7 +17,7 @@
           <h3 class="text-center">Current Reservations and Waiting List</h3>
           <br>
           <div class="text-center">
-          <a href="/reserve"><button type="button" class="btn btn-primary btn-lg"><span class="glyphicon glyphicon-list-alt"></span> Make Reservation</button></a>
+          <a href="/reserve"><button type="button" class="btn btn-danger btn-lg"><span class="glyphicon glyphicon-list-alt"></span> Make Reservation</button></a>
           <a href="/"><button type="button" class="btn btn-lg"><span class="glyphicon glyphicon-home"></span></button></a>
           </div>
         </div>
@@ -28,7 +28,7 @@
                             <div class="panel-heading">
                               <h3 class="panel-title"><strong>Table Reservation</strong></h3>
                             </div>
-                            <div class="panel-body">
+                            <div id="tableSection" class="panel-body">
 
                             </div>
                         </div>
@@ -39,7 +39,7 @@
                             <div class="panel-heading">
                                 <h3 class="panel-title"><strong>Wait List</strong></h3>
                             </div>
-                            <div class="panel-body">
+                            <div id="waitlistSection" class="panel-body">
 
                             </div>
                         </div>
@@ -47,6 +47,13 @@
                 </div>
         </div>
     </div>   
+
+    <footer class="footer">
+        <div class="container">
+          <p><a href="/api/tables">API Table Link</a> | <a href="/api/waitlist">API Wait List</a>
+          </p>
+        </div>
+      </footer>
     
     <script type="text/javascript">
         function runTableQuery () {
@@ -54,7 +61,7 @@
 
             $.ajax ({url: currentURL + "/api/tables", method: "GET"})
             .done(function(tableData){
-                for (var i-=0; i<tableData.length; i++){
+                for (var i=0; i<tableData.length; i++){
                     var tableSection = $("<div>"); 
                     tableSection.addClass('well');
                     tableSection.attr('id', 'tableWell-' + i+1)
@@ -62,14 +69,14 @@
 
                     var tablenumber = i + 1;
 
-                    $("#tableWell-" + i+1).append('<h2><span class="label label-primary">' + tablenumber + "</span> |" + tableData[i].customerID + "</h2>")
+                    $("#tableWell-" + i+1).append('<h2><span class="label label-primary">' + tablenumber + "</span> | " + tableData[i].uniqueid + "</h2>")
                 }
             });
         }
 
         function runWaitListQuery(){
             var currentURL = window.location.origin;
-            $.ajax ({url: currentURL + "/api/tables", method: "GET"})
+            $.ajax ({url: currentURL + "/api/waitlist", method: "GET"})
                 .done(function(waitlistData){
                     for (var i=0; i<waitlistData.length; i++) {
                         var waitlistSection = $("<div>");
@@ -79,7 +86,7 @@
 
                             var tablenumber = i + 1; 
 
-                            $("#waitlistWell-"+ i+1).append('<h2><span class="label label-primary">' + tablenumber + "</span |" + waitlistData[i].customerID + "</h2>");
+                            $("#waitlistWell-"+ i+1).append('<h2><span class="label label-primary">' + tablenumber + "</span> | " + waitlistData[i].uniqueid + "</h2>");
                     }
                 }); 
         }
