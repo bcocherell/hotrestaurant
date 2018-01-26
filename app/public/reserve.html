@@ -77,10 +77,14 @@
       };
 
       // Question: What does this code do??
-      $.post("/api/new", newReservation)
+      $.post("/api/reserve", newReservation)
       .done(function(data) {
-        
-        alert("Adding character...");
+        if (data.reserved){
+          alert("Reservation successful...");
+        }
+        else {
+          alert("You're on the waitlist...")
+        }
       });
     });
   </script>
