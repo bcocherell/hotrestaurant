@@ -49,20 +49,53 @@
     </div>   
     
     <script type="text/javascript">
-        // Question: What does this code do?
-        $(document).ready() {
-          event.preventDefault();
-          var newReservation = {
-            name: $("#name").val().trim(),
-            phone: $("#phone").val().trim(),
-            email: $("#email").val().trim(),
-            uniqueid: $("#uniqueid").val().trim()
-          };
-    
-          // Question: What does this code do??
-          $.get("/api/reserve", newReservation)
-          .done(function(data) {
-          });
+        function runTableQuery () {
+            var currentURL = window.location.origin;
+
+            $.ajax ({url: currentURL + "/api/tables", method: "GET"})
+            .done(function(tableData){
+                for (var i-=0; i<tableData.length; i++){
+                    var tableSection = $("<div>"); 
+                    tableSection.addClass('well');
+                    tableSection.attr('id', 'tableWell-' + i+1)
+                    $('#tableSection').append(tableSection);
+
+                    var tablenumber = i + 1;
+
+                    $("#tableWell-" + i+1).append('<h2><span class="label label-primary">' + tablenumber + "</span> |" + tableData[i].customerID + "</h2>")
+                }
+            });
         }
-      </script>
+
+        function runWaitListQuery(){
+            var currentURL = window.location.origin;
+            $.ajax ({url: currentURL + "/api/tables", method: "GET"})
+                .done(function(waitlistData){
+                    for (var i=0; i<waitlistData.length; i++) {
+                        var waitlistSection = $("<div>");
+                            waitlistSection.addClass('well');
+                            waitlistSection.attr('id', 'waitlistWell-' + i+1)
+                            $('#waitlistSection').append(waitlistSection);
+
+                            var tablenumber = i + 1; 
+
+                            $("#waitlistWell-"+ i+1).append('<h2><span class="label label-primary">' + tablenumber + "</span |" + waitlistData[i].customerID + "</h2>");
+                    }
+                }); 
+        }
+
+       function clearTable(){
+           var currentURL = window.location.origin;
+           $.ajax({url: currentURL + "/api/clear", method: "POST"})
+       }
+
+       $("#clear").on('click', function(){
+           alert("Clearing...");
+           clearTable();
+           location.reload();
+       })
+
+       runTableQuery();
+       runWaitListQuery();
+    </script>
 </body>
