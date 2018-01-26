@@ -13,7 +13,7 @@ module.exports = function(app) {
 		var reservation = req.body;
 		var success = false;
 
-		if(tables.length > 5) {
+		if(tables.length >= 5 ) {
 			waitlist.push(reservation);
 		} else {
 			tables.push(reservation);
