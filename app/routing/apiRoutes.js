@@ -6,6 +6,9 @@ module.exports = function(app) {
 	app.get('/api/tables', function(req, res) {
 		return res.json(tables);
 	});
+	app.get('/api/waitlist', function(req, res) {
+		return res.json(waitlist);
+	});
 	app.post('/api/reserve', function(req, res) {
 		var reservation = req.body;
 		var success = false;
