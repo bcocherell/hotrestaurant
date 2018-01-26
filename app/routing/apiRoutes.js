@@ -21,4 +21,8 @@ module.exports = function(app) {
 		}
 		res.json({reserved: success});
 	});
+	app.post('/api/clear', function(req, res) {
+		req.session.destroy();
+		res.json({deleted: true});
+	});
 };
